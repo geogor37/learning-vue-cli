@@ -14,26 +14,15 @@
 </template>
 
 <script>
-  import axios from 'axios';
   export default {
     name: 'home',
-    data() {
-      return {
-        tickets: []
+    computed: {
+      tickets() {
+        return this.$store.state.tickets;
       }
     },
     created() {
-      this.getTickets();
-    },
-    methods: {
-      async getTickets() {
-        try {
-          let response = await axios.get("/api/tickets");
-          this.tickets = response.data;
-        } catch (error) {
-          console.log(error);
-        }
-      },
+      this.$store.dispatch("getTickets");
     }
   }
 </script>

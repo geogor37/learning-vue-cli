@@ -30,19 +30,15 @@
       toggleForm() {
         this.creating = !this.creating;
       },
-      async addTicket() {
-        try {
-          await axios.post("/api/tickets", {
-            name: this.addedName,
-            problem: this.addedProblem
-          });
-          this.addedName = "";
-          this.addedProblem = "";
-          this.creating = false;
-        } catch (error) {
-          console.log(error);
-        }
-      },
+      addTicket() {
+        this.$store.dispatch("addTicket", {
+          name: this.addedName,
+          problem: this.addedProblem
+        });
+        this.addedName = "";
+        this.addedProblem = "";
+        this.creating = false;
+      }
     }
   }
 </script>
