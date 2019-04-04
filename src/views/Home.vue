@@ -1,18 +1,39 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Current Tickets</h1>
+    <div v-for="ticket in tickets" v-bind:key="ticket._id">
+      <hr>
+      <div class="ticket">
+        <div class="problem">
+          <p>{{ticket.problem}}</p>
+          <p><i>-- {{ticket.name}}</i></p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  import axios from 'axios';
+  export default {
+    name: 'home',
+    data() {
+      return {
+        tickets: []
+      }
+    },
+    created() {
+      this.getTickets();
+    },
+    methods: {
+      async getTickets() {
+        try {
+          let response = await axios.get("/api/tickets");
+          this.tickets = response.data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }
   }
-}
 </script>
